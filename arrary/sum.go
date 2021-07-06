@@ -13,12 +13,26 @@ func Sum(nums []int) int {
 	return sum
 }
 
-func SumAll(numberToSum ...[]int) (sums []int) {
-	lengthOfNumbers := len(numberToSum)
-	sums = make([]int, lengthOfNumbers)
-	for i, v := range numberToSum {
-		sums[i] = Sum(v)
+func SumAll(numberToSum ...[]int) []int {
+	// lengthOfNumbers := len(numberToSum)
+	var sums []int
+	for _, v := range numberToSum {
+		sums = append(sums, Sum(v))
 
 	}
-	return
+	return sums
+}
+
+func SumTails(numberToSumTails ...[]int) []int {
+	var sums []int
+	for _, v := range numberToSumTails {
+		if len(v) == 0 {
+			sums = append(sums, 0)
+		} else {
+			sums = append(sums, Sum(v[1:]))
+
+		}
+	}
+	return sums
+
 }
