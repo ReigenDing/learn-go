@@ -35,3 +35,7 @@ func (c Circle) Area() float64 {
 func (r RecTangle) Area() float64 {
 	return r.Height * r.Width
 }
+
+type Shape interface {
+	Area() float64
+}
