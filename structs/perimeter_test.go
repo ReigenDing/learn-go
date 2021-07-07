@@ -21,22 +21,35 @@ func TestArea(t *testing.T) {
 
 	}
 
-	t.Run("area of rectangle", func(t *testing.T) {
-		rectangle := RecTangle{10.0, 8.0}
-		// got := rectangle.Area()
-		// want := 80.0
-		// if got != want {
-		// 	t.Errorf("got %v want %v", got, want)
-		// }
-		checkArea(t, rectangle, 80.0)
-	})
-	t.Run("area of circle", func(t *testing.T) {
-		circle := Circle{10}
-		// got := circle.Area()
-		// want := 314.1592653589793
-		// if got != want {
-		// 	t.Errorf("got %v want %v ", got, want)
-		// }
-		checkArea(t, circle, 314.1592653589793)
-	})
+	// t.Run("area of rectangle", func(t *testing.T) {
+	// 	rectangle := RecTangle{10.0, 8.0}
+	// 	// got := rectangle.Area()
+	// 	// want := 80.0
+	// 	// if got != want {
+	// 	// 	t.Errorf("got %v want %v", got, want)
+	// 	// }
+	// 	checkArea(t, rectangle, 80.0)
+	// })
+	// t.Run("area of circle", func(t *testing.T) {
+	// 	circle := Circle{10}
+	// 	// got := circle.Area()
+	// 	// want := 314.1592653589793
+	// 	// if got != want {
+	// 	// 	t.Errorf("got %v want %v ", got, want)
+	// 	// }
+	// 	checkArea(t, circle, 314.1592653589793)
+	// })
+
+	// 创建一个匿名的结构体数组
+	areaTest := []struct {
+		shape Shape
+		want  float64
+	}{
+		{Circle{10.0}, 314.1592653589793},
+		{RecTangle{10.0, 8.0}, 80.0},
+		{Triangle{10.0, 6.0}, 30.0},
+	}
+	for _, v := range areaTest {
+		checkArea(t, v.shape, v.want)
+	}
 }
