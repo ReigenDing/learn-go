@@ -1,6 +1,9 @@
 package maps
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type Dictionary map[string]string
 
@@ -12,4 +15,10 @@ func (d Dictionary) Search(word string) (string, error) {
 		return "", ErrorNotFound
 	}
 	return definition, nil
+}
+
+func (d Dictionary) Add(word, definition string) {
+	var m map[string]string
+	fmt.Printf("%T %p %v %s====", m, m, m, m["word"])
+	d[word] = definition
 }
