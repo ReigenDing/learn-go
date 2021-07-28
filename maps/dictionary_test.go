@@ -1,6 +1,8 @@
 package maps
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestSearch(t *testing.T) {
 	dictionary := Dictionary{"test": "this is just a test"}
@@ -39,9 +41,21 @@ func assertError(t *testing.T, got, want error) {
 }
 
 func TestAdd(t *testing.T) {
-	dictionary := Dictionary{}
-	dictionary.Add("test", "this is just a test")
-	assertDefinition(t, dictionary, "test", "this is just a test")
+	t.Run("new word", func(t *testing.T) {
+		dictionary := Dictionary{}
+		err := dictionary.Add("test", "this is just a test")
+		assertError(t, err, nil)
+		assertDefinition(t, dictionary, "test", "this is just a test")
+	})
+	t.Run("exists word", func(t *testing.T) {
+		word := "test"
+		definition := "this is just a test"
+		dictionary := Dictionary{word: definition}
+		err := dictionary.Add(word, "new test")
+		assertError(t, err, ErrWordExists)
+		assertDefinition(t, dictionary, word, definition)
+
+	})
 }
 
 func assertDefinition(t *testing.T, dictionary Dictionary, word, definition string) {
