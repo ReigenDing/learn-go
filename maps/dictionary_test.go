@@ -88,3 +88,15 @@ func TestUpdate(t *testing.T) {
 	})
 
 }
+
+func TestDelete(t *testing.T) {
+	word := "word"
+	definition := "test definition"
+	dictionary := Dictionary{word: definition}
+	dictionary.Delete(word)
+
+	_, err := dictionary.Search(word)
+	if err != ErrorNotFound {
+		t.Errorf("Expected '%s' to be deleted", word)
+	}
+}
