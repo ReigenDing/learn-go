@@ -6,11 +6,11 @@ import (
 )
 
 func SlowStubWebsiteChecker(_ string) bool {
-	time.Sleep(2 * time.Second)
+	time.Sleep(2 * time.Millisecond)
 	return true
 }
 
-func BenchMarkCheckWebsite(b testing.B) {
+func BenchmarkCheckWebsite(b *testing.B) {
 	urls := make([]string, 100)
 	for i := 0; i < len(urls); i++ {
 		urls[i] = "a url"
