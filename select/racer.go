@@ -1,6 +1,20 @@
 package racer
 
-func websiteRacer(fastUrl, slowUrl string) string {
+import (
+	"net/http"
+	"time"
+)
 
-	return fastUrl
+func websiteRacer(a, b string) string {
+	startA := time.Now()
+	http.Get(a)
+	aDuration := time.Since(startA)
+
+	startB := time.Now()
+	bDuration := time.Since(startB)
+	if aDuration < bDuration {
+		return b
+	}
+
+	return a
 }

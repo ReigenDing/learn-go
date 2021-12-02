@@ -3,7 +3,7 @@ package racer
 import "testing"
 
 func TestRace(t *testing.T) {
-	slowUrl := "http://www.baidu.com"
+	slowUrl := "https://www.baidu.com"
 	fastUrl := "http://www.sina.com"
 	want := fastUrl
 	got := websiteRacer(fastUrl, slowUrl)
