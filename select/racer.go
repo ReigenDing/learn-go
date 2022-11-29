@@ -13,8 +13,8 @@ func websiteRacer(a, b string) string {
 	startB := time.Now()
 	bDuration := time.Since(startB)
 	if aDuration < bDuration {
-		return b
+		return a
 	}
 
-	return a
+	return b
 }
