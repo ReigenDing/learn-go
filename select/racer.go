@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+var tenSecondTimeout = 10 * time.Second
+
 // func websiteRacer(a, b string) string {
 // 	aDuration := measureResponseTime(a)
 // 	bDuration := measureResponseTime(b)
@@ -22,38 +24,39 @@ import (
 // 	return time.Since(start)
 // }
 
-func websiteRacer(a, b string) string {
-	// select {
-	// case <-ping(a):
-	// 	return a
-	// case <-ping(b):
-	// 	return b
-	// }
+func websiteRacer(a, b string) (winner string, err error) {
+	select {
+	case <-ping(a):
+		return a, nil
+	case <-ping(b):
+		return b, nil
+	case <-time.After(10 * time.Second):
+		return "", fmt.Errorf("timed out waitting for %s and %s", a, b)
+	}
 	// var s struct{}
-	s, ok := <-ping(a)
-	fmt.Println(s, ok)
-	s2, ok2 := <-ping(b)
-	fmt.Println(s2, ok2)
-	return b
+	// s, ok := <-ping(a)
+	// fmt.Println(s, ok)
+	// s2, ok2 := <-ping(b)
+	// fmt.Println(s2, ok2)
+	// return b
 }
 
-func ping(url string) chan struct{ a, b string } {
-	fmt.Println(url)
-	ch := make(chan struct{ a, b string })
+func ping(url string) chan struct{} {
+	ch := make(chan struct{})
 	go func() {
-		fmt.Println("1")
 		http.Get(url)
-		fmt.Println("2")
-		ch <- struct {
-			a string
-			b string
-		}{"1", "2"}
 		close(ch)
-		fmt.Println("3")
 	}()
-	fmt.Println("4")
-	s, ok := <-ch
-	fmt.Println(s, ok)
-	time.Sleep(5 * time.Second)
 	return ch
+}
+
+func ConfigurableRacer(a, b string, timeout time.Duration) (winner string, error error) {
+	select {
+	case <-ping(a):
+		return a, nil
+	case <-ping(a):
+		return b, nil
+	case <-time.After(timeout):
+		return "", fmt.Errorf("time out waiting for %s and %s", a, b)
+	}
 }
